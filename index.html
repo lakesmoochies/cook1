@@ -709,8 +709,8 @@
 
     <!-- Payment Modal -->
 <div id="paymentModal" class="modal-overlay">
-    <div class="modal-content fixed inset-4 md:inset-auto md:top-1/2 md:left-1/2 md:-translate-x-1/2 md:-translate-y-1/2 md:w-full md:max-w-md rounded-lg overflow-hidden" style="background: var(--bg-card); border: 1px solid var(--border);">
-        <div class="p-6 border-b" style="border-color: var(--border);">
+    <div class="modal-content fixed inset-4 md:inset-auto md:top-1/2 md:left-1/2 md:-translate-x-1/2 md:-translate-y-1/2 md:w-full md:max-w-md rounded-lg overflow-hidden" style="background: var(--bg-card); border: 1px solid var(--border); max-height: 90vh; display: flex; flex-direction: column;">
+        <div class="p-6 border-b flex-shrink-0" style="border-color: var(--border);">
             <div class="flex items-center justify-between">
                 <div>
                     <h3 class="text-xl">Payment</h3>
@@ -725,7 +725,7 @@
             </div>
         </div>
 
-        <div class="p-6">
+        <div class="p-6 overflow-y-auto flex-1">
             <!-- Timer -->
             <div id="timerSection" class="text-center py-3 mb-6 rounded" style="background: var(--accent-blush);">
                 <p class="text-xs uppercase tracking-wider mb-1" style="color: var(--fg-muted);">Expires in</p>
@@ -779,16 +779,17 @@
                 <p class="text-center text-sm mb-3" style="color: var(--fg-secondary);">
                     Sudah melakukan pembayaran?
                 </p>
-                <a id="confirmBtn" href="#" target="_blank" class="w-full py-4 rounded flex items-center justify-center gap-3 text-white font-medium transition-all hover:opacity-90" style="background: linear-gradient(135deg, #0088cc 0%, #005f8f 100%);">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69a.2.2 0 00-.05-.18c-.06-.05-.14-.03-.21-.02-.09.02-1.49.95-4.22 2.79-.4.27-.76.41-1.08.4-.36-.01-1.04-.2-1.55-.37-.63-.2-1.12-.31-1.08-.66.02-.18.27-.36.74-.55 2.92-1.27 4.86-2.11 5.83-2.51 2.78-1.16 3.35-1.36 3.73-1.36.08 0 .27.02.39.12.1.08.13.19.14.27-.01.06.01.24 0 .38z"/>
+                <button onclick="kirimKeTelegram()" class="w-full py-4 rounded flex items-center justify-center gap-3 text-white font-medium transition-all hover:opacity-90" style="background: linear-gradient(135deg, #0088cc 0%, #005f8f 100%);">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+                        <polyline points="22 4 12 14.01 9 11.01"/>
                     </svg>
-                    <span>SUDAH BAYAR - Konfirmasi via Telegram</span>
-                </a>
+                    <span>SUDAH BAYAR - Konfirmasi ke Admin</span>
+                </button>
             </div>
         </div>
 
-        <div class="p-4 text-center" style="background: var(--bg-secondary);">
+        <div class="p-4 text-center flex-shrink-0" style="background: var(--bg-secondary);">
             <p class="text-xs" style="color: var(--fg-muted);">
                 Scan with: GoPay, OVO, DANA, ShopeePay, LinkAja, etc.
             </p>
@@ -839,6 +840,82 @@
                         Chat WhatsApp
                     </a>
                 </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Confirm Payment Modal -->
+    <div id="confirmModal" class="modal-overlay">
+        <div class="modal-content fixed inset-4 md:inset-auto md:top-1/2 md:left-1/2 md:-translate-x-1/2 md:-translate-y-1/2 md:w-full md:max-w-md rounded-lg overflow-hidden" style="background: var(--bg-card); border: 1px solid var(--border); max-height: 90vh; display: flex; flex-direction: column;">
+            <!-- Header -->
+            <div class="p-5 border-b flex-shrink-0" style="border-color: var(--border); background: var(--bg-tertiary);">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center gap-3">
+                        <div class="w-9 h-9 rounded-full flex items-center justify-center text-white" style="background: #0088cc;">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69a.2.2 0 00-.05-.18c-.06-.05-.14-.03-.21-.02-.09.02-1.49.95-4.22 2.79-.4.27-.76.41-1.08.4-.36-.01-1.04-.2-1.55-.37-.63-.2-1.12-.31-1.08-.66.02-.18.27-.36.74-.55 2.92-1.27 4.86-2.11 5.83-2.51 2.78-1.16 3.35-1.36 3.73-1.36.08 0 .27.02.39.12.1.08.13.19.14.27-.01.06.01.24 0 .38z"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <h3 class="text-base font-medium">Konfirmasi Pembayaran</h3>
+                            <p class="text-xs" style="color: var(--fg-muted);">Isi format & upload bukti transfer</p>
+                        </div>
+                    </div>
+                    <button onclick="closeConfirmModal()" class="p-2 rounded-full transition-colors hover:bg-black/5">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Body (scrollable) -->
+            <div class="overflow-y-auto flex-1 p-5 space-y-5">
+
+                <!-- Format Order Preview -->
+                <div>
+                    <p class="text-xs uppercase tracking-wider mb-2 font-medium" style="color: var(--fg-muted);">Format Konfirmasi</p>
+                    <div class="rounded-lg p-4 font-mono text-xs leading-relaxed relative" style="background: var(--bg-tertiary); border: 1px solid var(--border-light); white-space: pre-wrap; word-break: break-word;" id="orderFormatPreview"></div>
+                    <button onclick="copyOrderFormat()" class="mt-2 text-xs flex items-center gap-1 transition-colors" style="color: var(--accent-rose);">
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+                        </svg>
+                        Salin Format
+                    </button>
+                </div>
+
+                <!-- Reminder SS -->
+                <div class="rounded-lg p-4" style="background: #fff7ed; border: 1px solid #fed7aa;">
+                    <div class="flex gap-3">
+                        <span class="text-xl flex-shrink-0">📸</span>
+                        <div>
+                            <p class="text-sm font-medium mb-1" style="color: #92400e;">Wajib sertakan bukti SS!</p>
+                            <p class="text-xs leading-relaxed" style="color: #b45309;">Setelah Telegram terbuka, <strong>lampirkan screenshot bukti pembayaran</strong> bersama format di atas sebelum mengirim ke admin.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Petunjuk -->
+                <div class="rounded-lg p-4 text-xs leading-relaxed" style="background: var(--accent-blush); border: 1px solid var(--accent-pink);">
+                    <p class="font-medium mb-2" style="color: var(--fg-secondary);">📋 Cara konfirmasi:</p>
+                    <ol class="space-y-1" style="color: var(--fg-secondary); list-style: decimal; padding-left: 16px;">
+                        <li>Klik tombol <strong>Buka Telegram</strong> di bawah</li>
+                        <li>Format order sudah otomatis terisi</li>
+                        <li>Lampirkan <strong>screenshot bukti bayar</strong> ke pesan</li>
+                        <li>Kirim ke admin</li>
+                    </ol>
+                </div>
+            </div>
+
+            <!-- Footer -->
+            <div class="p-5 border-t flex-shrink-0 space-y-3" style="border-color: var(--border); background: var(--bg-secondary);">
+                <button id="sendToTelegramBtn" onclick="sendConfirmToTelegram()" class="w-full py-4 rounded flex items-center justify-center gap-3 text-white font-medium transition-all hover:opacity-90" style="background: linear-gradient(135deg, #0088cc 0%, #005f8f 100%);">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69a.2.2 0 00-.05-.18c-.06-.05-.14-.03-.21-.02-.09.02-1.49.95-4.22 2.79-.4.27-.76.41-1.08.4-.36-.01-1.04-.2-1.55-.37-.63-.2-1.12-.31-1.08-.66.02-.18.27-.36.74-.55 2.92-1.27 4.86-2.11 5.83-2.51 2.78-1.16 3.35-1.36 3.73-1.36.08 0 .27.02.39.12.1.08.13.19.14.27-.01.06.01.24 0 .38z"/>
+                    </svg>
+                    <span>Buka Telegram & Kirim Konfirmasi</span>
+                </button>
+                <p class="text-center text-xs" style="color: var(--fg-muted);">Jangan lupa lampirkan SS bukti bayar di Telegram</p>
             </div>
         </div>
     </div>
@@ -1399,10 +1476,6 @@ Please process my order. Thank you!`);
             clearInterval(countdownInterval);
             startCountdown();
             await generateQRIS(currentPaymentTotal);
-            
-            // Update confirm button link
-            const confirmBtn = document.getElementById('confirmBtn');
-            confirmBtn.href = `https://t.me/bujajg?text=${generateOrderFormat()}`;
         }
 
         function downloadQR() {
@@ -1430,6 +1503,174 @@ Please process my order. Thank you!`);
         function openChatModal() {
             chatModal.classList.add('active');
         }
+function kirimKeTelegram() {
+    const total = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
+    const items = cart.map(item => `- ${item.service} ${item.item} x${item.qty} (${formatCurrency(item.price * item.qty)})`).join('\n');
+    const now = new Date();
+    const tanggal = now.toLocaleDateString('id-ID', { day: '2-digit', month: 'long', year: 'numeric' });
+    const jam = now.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' });
+
+    const format = `📦 KONFIRMASI ORDER
+━━━━━━━━━━━━━━━━━━
+${items}
+━━━━━━━━━━━━━━━━━━
+💰 Total: ${formatCurrency(total)}
+💳 Pembayaran: QRIS
+📅 Tanggal: ${tanggal}, ${jam}
+━━━━━━━━━━━━━━━━━━
+✅ Pembayaran sudah dilakukan.
+Mohon segera diproses. Terima kasih!
+
+📎 (Bukti SS terlampir)`;
+
+    window.open(`https://t.me/bujajg?text=${encodeURIComponent(format)}`, '_blank');
+}
+        // ── Confirm Payment Modal ──────────────────────────────────────
+        let ssFileData = null; // base64 atau null
+
+        function openConfirmModal() {
+            // Isi preview format order
+            const total = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
+            const items = cart.map(item =>
+                `• ${item.service} — ${item.item} x${item.qty} (${formatCurrency(item.price * item.qty)})`
+            ).join('\n');
+            const now = new Date();
+            const tanggal = now.toLocaleDateString('id-ID', { day: '2-digit', month: 'long', year: 'numeric' });
+            const jam = now.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' });
+
+            const format =
+`📦 KONFIRMASI ORDER
+━━━━━━━━━━━━━━━━━━
+${items}
+━━━━━━━━━━━━━━━━━━
+💰 Total: ${formatCurrency(total)}
+💳 Pembayaran: QRIS
+📅 Tanggal: ${tanggal}, ${jam}
+━━━━━━━━━━━━━━━━━━
+✅ Pembayaran sudah dilakukan.
+Mohon segera diproses. Terima kasih!
+
+📎 (Bukti SS terlampir)`;
+
+            document.getElementById('orderFormatPreview').textContent = format;
+
+            // Reset SS
+            ssFileData = null;
+            document.getElementById('ssPreviewWrap').classList.add('hidden');
+            document.getElementById('ssFileInput').value = '';
+            updateSendBtn();
+
+            document.getElementById('confirmModal').classList.add('active');
+        }
+
+        function closeConfirmModal() {
+            document.getElementById('confirmModal').classList.remove('active');
+        }
+
+        function copyOrderFormat() {
+            const text = document.getElementById('orderFormatPreview').textContent;
+            navigator.clipboard.writeText(text)
+                .then(() => showToast('Format disalin!'))
+                .catch(() => showToast('Gagal menyalin'));
+        }
+
+        function handleSSUpload(event) {
+            const file = event.target.files[0];
+            processSSFile(file);
+        }
+
+        function processSSFile(file) {
+            if (!file) return;
+            if (!file.type.startsWith('image/')) {
+                showToast('File harus berupa gambar!');
+                return;
+            }
+            if (file.size > 5 * 1024 * 1024) {
+                showToast('Ukuran file maks 5MB!');
+                return;
+            }
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                ssFileData = e.target.result;
+                document.getElementById('ssPreviewImg').src = ssFileData;
+                document.getElementById('ssPreviewWrap').classList.remove('hidden');
+                updateSendBtn();
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function removeSSPreview() {
+            ssFileData = null;
+            document.getElementById('ssPreviewWrap').classList.add('hidden');
+            document.getElementById('ssFileInput').value = '';
+            updateSendBtn();
+        }
+
+        function updateSendBtn() {
+            const btn = document.getElementById('sendToTelegramBtn');
+            const txt = document.getElementById('sendBtnText');
+            if (ssFileData) {
+                btn.disabled = false;
+                btn.style.opacity = '1';
+                btn.style.cursor = 'pointer';
+                txt.textContent = 'Kirim Konfirmasi ke Telegram';
+            } else {
+                btn.disabled = true;
+                btn.style.opacity = '0.5';
+                btn.style.cursor = 'not-allowed';
+                txt.textContent = 'Upload bukti dulu untuk melanjutkan';
+            }
+        }
+
+        function sendConfirmToTelegram() {
+            const total = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
+            const items = cart.map(item =>
+                `• ${item.service} — ${item.item} x${item.qty} (${formatCurrency(item.price * item.qty)})`
+            ).join('\n');
+            const now = new Date();
+            const tanggal = now.toLocaleDateString('id-ID', { day: '2-digit', month: 'long', year: 'numeric' });
+            const jam = now.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' });
+
+            const format =
+`📦 KONFIRMASI ORDER
+━━━━━━━━━━━━━━━━━━
+${items}
+━━━━━━━━━━━━━━━━━━
+💰 Total: ${formatCurrency(total)}
+💳 Pembayaran: QRIS
+📅 Tanggal: ${tanggal}, ${jam}
+━━━━━━━━━━━━━━━━━━
+✅ Pembayaran sudah dilakukan.
+Mohon segera diproses. Terima kasih!`;
+
+            const telegramUrl = `https://t.me/bujajg?text=${encodeURIComponent(format)}`;
+            window.open(telegramUrl, '_blank');
+            closeConfirmModal();
+        }
+
+        // Drag & Drop
+        function handleDragOver(e) {
+            e.preventDefault();
+            document.getElementById('ssDropzone').style.borderColor = 'var(--accent-rose)';
+            document.getElementById('ssDropzone').style.background = 'var(--accent-blush)';
+        }
+        function handleDragLeave(e) {
+            document.getElementById('ssDropzone').style.borderColor = 'var(--border)';
+            document.getElementById('ssDropzone').style.background = 'var(--bg-tertiary)';
+        }
+        function handleDrop(e) {
+            e.preventDefault();
+            handleDragLeave(e);
+            const file = e.dataTransfer.files[0];
+            processSSFile(file);
+        }
+
+        // Close confirm modal on outside click
+        document.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('confirmModal').addEventListener('click', (e) => {
+                if (e.target === document.getElementById('confirmModal')) closeConfirmModal();
+            });
+        });
 
         // Scroll reveal
         function setupScrollReveal() {
